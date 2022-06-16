@@ -8,12 +8,19 @@ router.get('/', async (req: UserRequest, res: Response) => {
     const order = req.query.order || 'ASC' as any
     const limit = 5
     const query = productRepository.createQueryBuilder('product')
+        .leftJoinAndSelect('product.company', 'company')
         .skip(page - 1)
         .take(limit)
         .orderBy('product.name', order)
     const totalRecord = await productRepository.count()
     if (req.query.name) {
         query.where('product.name like LOWER(:name)', { name: `%${(req.query.name as string).toLowerCase()}%` })
+    }
+    if (req.query.company) {
+        query.where('product.company.id = :companyId', { companyId: +req.query.company })
+    }
+    if (req.query.category) {
+        query.where('product.category = :category', { category: req.query.category })
     }
     const products = await query.getMany()
     res.status(200).json({ total: Math.ceil(totalRecord / limit), products })

@@ -1,6 +1,9 @@
-import { FC, useState, useEffect, useContext, createContext, ReactNode, useRef } from 'react'
+import { FC, useState, useEffect, useContext, createContext, ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
+import { notification } from 'antd'
+import type { NotificationPlacement } from 'antd/lib/notification'
+
 
 interface User {
     firstName: string,
@@ -31,8 +34,16 @@ const useProvideAuth = () => {
     const [isLoading, setLoading] = useState(true)
 
     const logout = () => {
+        notification.info({
+            message: `See you later`,
+            description:
+                'You log out from this account.',
+            placement: 'bottomRight'
+        })
         setUser(undefined)
+        Cookies.remove('token')
         router.push('/auth/login')
+        setLoading(false)
     }
 
     const autoLogin = async () => {

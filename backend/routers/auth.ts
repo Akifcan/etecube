@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express'
 import md5 from 'md5'
 import jwt from 'jsonwebtoken'
 import { userRepository } from '../db'
+import UserRequest from '../interface/UserRequest'
+import { authGuard } from '../middleware'
 const router = express.Router()
 
 router.post('/login', async (req: Request, res: Response) => {
@@ -29,6 +31,16 @@ router.post('/register', async (req: Request, res: Response) => {
     const token = jwt.sign({ user }, process.env.JWT_SECRET!)
 
     res.status(201).json({ user, token })
+})
+
+router.use(authGuard).get('/verify', async (req: UserRequest, res: Response) => {
+    const user = await userRepository.findOneBy({ id: req.user?.id })
+    delete user?.password
+    if (user) {
+        res.status(200).json(user)
+    } else {
+        res.status(403).json({ message: 'Please try to login again' })
+    }
 })
 
 export default router

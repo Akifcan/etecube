@@ -27,6 +27,7 @@ const express_1 = __importDefault(require("express"));
 const md5_1 = __importDefault(require("md5"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("../db");
+const middleware_1 = require("../middleware");
 const router = express_1.default.Router();
 router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
@@ -48,5 +49,16 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const { password: userPassword } = saveUser, user = __rest(saveUser, ["password"]);
     const token = jsonwebtoken_1.default.sign({ user }, process.env.JWT_SECRET);
     res.status(201).json({ user, token });
+}));
+router.use(middleware_1.authGuard).get('/verify', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const user = yield db_1.userRepository.findOneBy({ id: (_a = req.user) === null || _a === void 0 ? void 0 : _a.id });
+    user === null || user === void 0 ? true : delete user.password;
+    if (user) {
+        res.status(200).json(user);
+    }
+    else {
+        res.status(403).json({ message: 'Please try to login again' });
+    }
 }));
 exports.default = router;

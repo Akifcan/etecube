@@ -1,6 +1,6 @@
-import { FC, useState, useCallback, useRef } from 'react'
+import { FC, useState, useCallback } from 'react'
 import Container from '@/components/Container'
-import { Input, Button } from 'antd'
+import { Input, Button, Alert } from 'antd'
 import FormGroup from '@/components/FormGroup'
 import Link from 'next/link'
 import Validation, { FormProps } from '@/helpers/validation'
@@ -16,7 +16,7 @@ const Register: FC = () => {
 
     const [disabled, setDisabled] = useState(true)
 
-    const { register } = useAuth()
+    const { register, errorMessage, isLoading } = useAuth()
 
     const form = useCallback((node: HTMLFormElement) => {
         if (!node) return
@@ -30,8 +30,8 @@ const Register: FC = () => {
         })
     }, [])
 
-    const onSubmit = () => {
-        register!({
+    const onSubmit = async () => {
+        await register!({
             email: email.value,
             password: password.value,
             firstName: firstName.value,
@@ -45,6 +45,15 @@ const Register: FC = () => {
             className='center column' style={{ width: '300px', margin: 'auto' }}>
             {validation && (
                 <>
+                    {errorMessage && (
+                        <Alert
+                            style={{ width: '100%' }}
+                            message="An Error Occured"
+                            description={errorMessage}
+                            type="warning"
+                            closable
+                        />
+                    )}
                     <FormGroup isRequired={true} errorMessage={email.errorMessage}>
                         <Input
                             onChange={(e) => {
@@ -96,7 +105,7 @@ const Register: FC = () => {
                         disabled={disabled}
                         type="primary"
                         size="large"
-                        loading={false}
+                        loading={isLoading}
                         style={{ width: '100%' }}>
                         Register
                     </Button>

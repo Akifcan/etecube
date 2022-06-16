@@ -1,9 +1,10 @@
 import { FC, useCallback, useState } from 'react'
 import Container from '@/components/Container'
-import { Input, Button } from 'antd'
+import { Input, Button, Alert } from 'antd'
 import FormGroup from '@/components/FormGroup'
 import Link from 'next/link'
 import Validation, { FormProps } from '@/helpers/validation'
+import { useAuth } from '@/hooks/useAuth'
 
 const Login: FC = () => {
 
@@ -12,6 +13,8 @@ const Login: FC = () => {
     const [password, setPassword] = useState<FormProps<string>>({ value: '', errorMessage: '' })
 
     const [disabled, setDisabled] = useState(true)
+
+    const { errorMessage, login, isLoading } = useAuth()
 
     const form = useCallback((node: HTMLFormElement) => {
         if (!node) return
@@ -25,10 +28,21 @@ const Login: FC = () => {
         })
     }, [])
 
+    const onSubmit = () => login!(email.value, password.value)
+
     return <Container>
         <form ref={form} className='center column' style={{ width: '300px' }}>
             {validation && (
                 <>
+                    {errorMessage && (
+                        <Alert
+                            style={{ width: '100%' }}
+                            message="An Error Occured"
+                            description={errorMessage}
+                            type="warning"
+                            closable
+                        />
+                    )}
                     <FormGroup isRequired={true} errorMessage={email.errorMessage}>
                         <Input
                             onChange={(e) => {
@@ -52,7 +66,13 @@ const Login: FC = () => {
                             placeholder='Your password'
                             style={{ width: '100%' }} />
                     </FormGroup>
-                    <Button disabled={disabled} type="primary" size="large" loading={false} style={{ width: '100%' }}>
+                    <Button
+                        onClick={onSubmit}
+                        disabled={disabled}
+                        type="primary"
+                        size="large"
+                        loading={isLoading}
+                        style={{ width: '100%' }}>
                         Login
                     </Button>
                     <Link passHref={true} href='/auth/register'><a>Click here for register</a></Link>

@@ -14,7 +14,7 @@ export class User {
     lastName: string
 
     @Column()
-    password: string
+    password?: string
 
     @Column({ unique: true })
     email: string

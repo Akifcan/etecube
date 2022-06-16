@@ -28,7 +28,7 @@ const useProvideAuth = () => {
     const router = useRouter()
     const [user, setUser] = useState<User>()
     const [errorMessage, setErrorMessage] = useState('')
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(true)
 
     const logout = () => {
         setUser(undefined)
@@ -37,6 +37,7 @@ const useProvideAuth = () => {
 
     const autoLogin = async () => {
 
+        setLoading(true)
         const token = Cookies.get('token')
         if (!token) {
             if (router.asPath !== '/auth/register') {
@@ -51,6 +52,8 @@ const useProvideAuth = () => {
             const data = await response.json()
             response.status === 200 ? setUser(data) : router.push('/auth/login')
         }
+        setLoading(false)
+
     }
 
     const login = async (email: string, password: string) => {
@@ -90,6 +93,7 @@ const useProvideAuth = () => {
     useEffect(() => {
         autoLogin()
         setErrorMessage('')
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.asPath])
 

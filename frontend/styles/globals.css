@@ -1,5 +1,5 @@
 :root {
-    --background: #eee;
+    --background: #d7cccc;
 }
 
 body {
@@ -9,4 +9,21 @@ body {
 .container {
     width: min(80%, 1400px);
     margin: auto;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.column {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.form-group {
+    width: 100%;
 }

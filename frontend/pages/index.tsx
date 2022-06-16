@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { DatePicker } from 'antd'
-import Container from './components/Container'
+import Container from '@/components/Container'
 
 const Home: NextPage = () => {
   return (

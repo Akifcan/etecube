@@ -1,7 +1,7 @@
 express setup[x]
 auth[x]
 company[x]
-product[]
+product[x]
 next setup[]
 auth page[]
 auth context[]

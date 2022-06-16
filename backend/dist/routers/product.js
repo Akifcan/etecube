@@ -37,6 +37,9 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield query.getMany();
     res.status(200).json({ total: Math.ceil(totalRecord / limit), products });
 }));
+router.get('/categories', (_, res) => {
+    res.status(200).json(['phone', 'laptop', 'car', 'headphone']);
+});
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = yield db_1.productRepository.save(req.body);
     res.status(201).json(product);

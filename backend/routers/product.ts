@@ -26,6 +26,10 @@ router.get('/', async (req: UserRequest, res: Response) => {
     res.status(200).json({ total: Math.ceil(totalRecord / limit), products })
 })
 
+router.get('/categories', (_, res: Response) => {
+    res.status(200).json(['phone', 'laptop', 'car', 'headphone'])
+})
+
 router.post('/', async (req: UserRequest, res: Response) => {
     const product = await productRepository.save(req.body)
     res.status(201).json(product)

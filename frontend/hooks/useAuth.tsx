@@ -35,12 +35,21 @@ const useProvideAuth = () => {
         router.push('/auth/login')
     }
 
-    const autoLogin = () => {
-        if (!Cookies.get('token')) {
-            return router.push('/auth/login')
+    const autoLogin = async () => {
+
+        const token = Cookies.get('token')
+        if (!token) {
+            if (router.asPath !== '/auth/register') {
+                return router.push('/auth/login')
+            }
         }
-        if (Cookies.get('token')) {
-            console.log("ok");
+        if (token) {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API}/auth/verify`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            const data = await response.json()
+            response.status === 200 ? setUser(data) : router.push('/auth/login')
         }
     }
 
@@ -80,11 +89,8 @@ const useProvideAuth = () => {
 
     useEffect(() => {
         autoLogin()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
         setErrorMessage('')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.asPath])
 
     return { user, logout, login, register, errorMessage, isLoading }

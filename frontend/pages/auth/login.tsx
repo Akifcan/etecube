@@ -31,7 +31,7 @@ const Login: FC = () => {
     const onSubmit = () => login!(email.value, password.value)
 
     return <Container>
-        <form ref={form} className='center column' style={{ width: '300px' }}>
+        <form ref={form} className='center column' style={{ width: '300px', margin: 'auto' }}>
             {validation && (
                 <>
                     {errorMessage && (

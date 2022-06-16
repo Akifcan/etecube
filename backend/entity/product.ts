@@ -22,7 +22,7 @@ export class Product {
         company => company.id,
         { onDelete: 'CASCADE' }
     )
-    company: string
+    company: Company
 
 }
 

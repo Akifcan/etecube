@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 
 import authRouter from './routers/auth'
 import companyRouter from './routers/company'
+import productRouter from './routers/product'
 
 const app: Express = express()
 
@@ -28,6 +29,7 @@ AppDataSource.initialize()
 
         app.use('/auth', authRouter)
         app.use('/company', authGuard, companyRouter)
+        app.use('/product', authGuard, productRouter)
 
         app.listen(port, () => {
             console.log(`⚡️[server]: Server is running at https://localhost:${port}`);

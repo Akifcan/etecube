@@ -8,6 +8,7 @@ const db_1 = __importDefault(require("./db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const auth_1 = __importDefault(require("./routers/auth"));
 const company_1 = __importDefault(require("./routers/company"));
+const product_1 = __importDefault(require("./routers/product"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const port = 3000;
@@ -25,6 +26,7 @@ db_1.default.initialize()
     .then(() => {
     app.use('/auth', auth_1.default);
     app.use('/company', authGuard, company_1.default);
+    app.use('/product', authGuard, product_1.default);
     app.listen(port, () => {
         console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
     });

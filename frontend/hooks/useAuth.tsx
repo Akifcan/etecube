@@ -5,11 +5,14 @@ interface User {
     firstName: string,
     email: string,
     lastName: string
+    password?: string
 }
 
 interface ContextProps {
     user?: User,
     logout?: () => void,
+    login?: () => void,
+    register?: (user: User) => void
 }
 
 const authContext = createContext<ContextProps>({})
@@ -31,11 +34,19 @@ const useProvideAuth = () => {
         console.log("autologin");
     }
 
+    const login = () => {
+        console.log("login");
+    }
+
+    const register = (user: User) => {
+        console.log(user);
+    }
+
     useEffect(() => {
         autoLogin()
     }, [])
 
-    return { user, logout }
+    return { user, logout, login, register }
 
 }
 

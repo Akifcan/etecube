@@ -4,6 +4,7 @@ import { Input, Button } from 'antd'
 import FormGroup from '@/components/FormGroup'
 import Link from 'next/link'
 import Validation, { FormProps } from '@/helpers/validation'
+import { useAuth } from '@/hooks/useAuth'
 
 const Register: FC = () => {
 
@@ -14,6 +15,8 @@ const Register: FC = () => {
     const [lastname, setLastname] = useState<FormProps<string>>({ value: '', errorMessage: '' })
 
     const [disabled, setDisabled] = useState(true)
+
+    const { register } = useAuth()
 
     const form = useCallback((node: HTMLFormElement) => {
         if (!node) return
@@ -27,8 +30,19 @@ const Register: FC = () => {
         })
     }, [])
 
+    const onSubmit = () => {
+        register!({
+            email: email.value,
+            password: password.value,
+            firstName: firstName.value,
+            lastName: lastname.value
+        })
+    }
+
     return <Container>
-        <form ref={form} className='center column' style={{ width: '300px', margin: 'auto' }}>
+        <form
+            ref={form}
+            className='center column' style={{ width: '300px', margin: 'auto' }}>
             {validation && (
                 <>
                     <FormGroup isRequired={true} errorMessage={email.errorMessage}>
@@ -77,7 +91,13 @@ const Register: FC = () => {
                             placeholder='Last Name'
                             style={{ width: '100%' }} />
                     </FormGroup>
-                    <Button disabled={disabled} type="primary" size="large" loading={false} style={{ width: '100%' }}>
+                    <Button
+                        onClick={onSubmit}
+                        disabled={disabled}
+                        type="primary"
+                        size="large"
+                        loading={false}
+                        style={{ width: '100%' }}>
                         Register
                     </Button>
                     <Link passHref={true} href='/auth/login'><a>Click here for login</a></Link>

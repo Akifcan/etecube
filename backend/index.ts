@@ -2,6 +2,7 @@ import express, { Express, Response, NextFunction } from 'express'
 import AppDataSource from './db'
 import UserRequest from './interface/UserRequest'
 import jwt from 'jsonwebtoken'
+import cors from 'cors'
 
 import authRouter from './routers/auth'
 import companyRouter from './routers/company'
@@ -9,6 +10,7 @@ import productRouter from './routers/product'
 
 const app: Express = express()
 
+app.use(cors())
 app.use(express.json())
 
 const port = 3000

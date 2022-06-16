@@ -19,6 +19,7 @@ __decorate([
 ], Company.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    (0, typeorm_1.Index)(),
     __metadata("design:type", String)
 ], Company.prototype, "name", void 0);
 __decorate([

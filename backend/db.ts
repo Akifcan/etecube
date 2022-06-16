@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import { DataSource } from "typeorm"
+import { Company } from './entity/company'
 import { User } from './entity/user'
 
 const AppDataSource = new DataSource({
@@ -11,13 +12,15 @@ const AppDataSource = new DataSource({
     username: process.env.POSTGRES_NAME,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    entities: [User],
+    entities: [User, Company],
     synchronize: true,
     logging: false,
 })
 
 const userRepository = AppDataSource.getRepository(User)
-export { userRepository }
+const companyRepository = AppDataSource.getRepository(Company)
+
+export { userRepository, companyRepository }
 
 
 export default AppDataSource

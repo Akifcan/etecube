@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, Index } from "typeorm"
 
 @Entity()
 export class Company {
@@ -7,6 +7,7 @@ export class Company {
     id: number
 
     @Column()
+    @Index()
     name: string
 
     @Column()

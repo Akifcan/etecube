@@ -1,29 +1,89 @@
-import { FC } from 'react'
+import { FC, useState, useCallback, useRef } from 'react'
 import Container from '@/components/Container'
 import { Input, Button } from 'antd'
 import FormGroup from '@/components/FormGroup'
 import Link from 'next/link'
+import Validation, { FormProps } from '@/helpers/validation'
 
 const Register: FC = () => {
+
+    const [validation, setValidation] = useState<Validation>()
+    const [email, setEmail] = useState<FormProps<string>>({ value: '', errorMessage: '' })
+    const [password, setPassword] = useState<FormProps<string>>({ value: '', errorMessage: '' })
+    const [firstName, setFirstname] = useState<FormProps<string>>({ value: '', errorMessage: '' })
+    const [lastname, setLastname] = useState<FormProps<string>>({ value: '', errorMessage: '' })
+
+    const [disabled, setDisabled] = useState(true)
+
+    const form = useCallback((node: HTMLFormElement) => {
+        if (!node) return
+
+        setValidation(new Validation(node))
+        node.addEventListener('valid', () => {
+            setDisabled(false)
+        });
+        node.addEventListener('not-valid', () => {
+            setDisabled(true)
+        })
+    }, [])
+
     return <Container>
-        <main className='center column' style={{ width: '300px', margin: 'auto' }}>
-            <FormGroup isRequired={true}>
-                <Input type={'email'} placeholder='Your email' style={{ width: '100%' }} />
-            </FormGroup>
-            <FormGroup isRequired={true}>
-                <Input type={'password'} placeholder='Your password' style={{ width: '100%' }} />
-            </FormGroup>
-            <FormGroup isRequired={true}>
-                <Input placeholder='First Name' style={{ width: '100%' }} />
-            </FormGroup>
-            <FormGroup isRequired={true}>
-                <Input placeholder='Last Name' style={{ width: '100%' }} />
-            </FormGroup>
-            <Button type="primary" size="large" loading={false} style={{ width: '100%' }}>
-                Register
-            </Button>
-            <Link passHref={true} href='/auth/register'><a>Click here for login</a></Link>
-        </main>
+        <form ref={form} className='center column' style={{ width: '300px', margin: 'auto' }}>
+            {validation && (
+                <>
+                    <FormGroup isRequired={true} errorMessage={email.errorMessage}>
+                        <Input
+                            onChange={(e) => {
+                                setEmail({
+                                    value: e.target.value,
+                                    errorMessage: validation.setValue(e.target.value).notEmpty().email().validate()
+                                })
+                            }}
+                            type={'email'}
+                            placeholder='Your email'
+                            style={{ width: '100%' }} />
+                    </FormGroup>
+                    <FormGroup isRequired={true} errorMessage={password.errorMessage}>
+                        <Input
+                            onChange={(e) => {
+                                setPassword({
+                                    value: e.target.value,
+                                    errorMessage: validation.setValue(e.target.value).notEmpty().validate()
+                                })
+                            }}
+                            type={'password'}
+                            placeholder='Your password'
+                            style={{ width: '100%' }} />
+                    </FormGroup>
+                    <FormGroup isRequired={true} errorMessage={firstName.errorMessage}>
+                        <Input
+                            onChange={(e) => {
+                                setFirstname({
+                                    value: e.target.value,
+                                    errorMessage: validation.setValue(e.target.value).notEmpty().validate()
+                                })
+                            }}
+                            placeholder='First Name'
+                            style={{ width: '100%' }} />
+                    </FormGroup>
+                    <FormGroup isRequired={true} errorMessage={lastname.errorMessage}>
+                        <Input
+                            onChange={(e) => {
+                                setLastname({
+                                    value: e.target.value,
+                                    errorMessage: validation.setValue(e.target.value).notEmpty().validate()
+                                })
+                            }}
+                            placeholder='Last Name'
+                            style={{ width: '100%' }} />
+                    </FormGroup>
+                    <Button disabled={disabled} type="primary" size="large" loading={false} style={{ width: '100%' }}>
+                        Register
+                    </Button>
+                    <Link passHref={true} href='/auth/login'><a>Click here for login</a></Link>
+                </>
+            )}
+        </form>
     </Container>
 }
 

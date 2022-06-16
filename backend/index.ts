@@ -1,26 +1,11 @@
 import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
-
-import { DataSource } from "typeorm"
-import { User } from './entity/user'
+import md5 from 'md5'
+import AppDataSource, { userRepository } from './db'
 
 const app: Express = express()
 app.use(express.json())
 
-dotenv.config()
 const port = 3000
-
-const AppDataSource = new DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: process.env.POSTGRES_PORT as unknown as number,
-    username: process.env.POSTGRES_NAME,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    entities: [User],
-    synchronize: true,
-    logging: false,
-})
 
 AppDataSource.initialize()
     .then(() => {
@@ -32,8 +17,17 @@ AppDataSource.initialize()
             res.send(req.body)
         })
 
-        app.post('/register', (req: Request, res: Response) => {
-            res.send('ok')
+        app.post('/register', async (req: Request, res: Response) => {
+            const { email, password, firstName, lastName } = req.body
+
+            const isEmailExists = await userRepository.findOneBy({ email })
+
+            if (isEmailExists) {
+                return res.status(403).json({ message: 'This email already registered' })
+            }
+
+            const saveUser = await userRepository.save({ email, password: md5(password), lastName, firstName })
+            res.status(201).json(saveUser)
         })
 
         app.listen(port, () => {

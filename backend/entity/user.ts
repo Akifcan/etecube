@@ -1,15 +1,23 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import AppDataSource from "../db"
 
 @Entity()
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
     @Column()
-    firstName: string;
+    firstName: string
 
     @Column()
-    lastName: string;
+    lastName: string
+
+    @Column()
+    password: string
+
+    @Column({ unique: true })
+    email: string
 
 }
+

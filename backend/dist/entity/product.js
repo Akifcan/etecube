@@ -9,37 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Company = void 0;
+exports.Product = void 0;
 const typeorm_1 = require("typeorm");
-const product_1 = require("./product");
-let Company = class Company {
+const company_1 = require("./company");
+let Product = class Product {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], Company.prototype, "id", void 0);
+], Product.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     (0, typeorm_1.Index)(),
     __metadata("design:type", String)
-], Company.prototype, "name", void 0);
+], Product.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Product.prototype, "amount", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Company.prototype, "legalNumber", void 0);
+], Product.prototype, "category", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.ManyToOne)(() => company_1.Company, company => company.id, { onDelete: 'CASCADE' }),
     __metadata("design:type", String)
-], Company.prototype, "country", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Company.prototype, "website", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => product_1.Product, product => product.company),
-    __metadata("design:type", product_1.Product)
-], Company.prototype, "product", void 0);
-Company = __decorate([
+], Product.prototype, "company", void 0);
+Product = __decorate([
     (0, typeorm_1.Entity)()
-], Company);
-exports.Company = Company;
+], Product);
+exports.Product = Product;

@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express'
 import UserRequest from '../interface/UserRequest'
 const router = express.Router()
 import { companyRepository } from '../db'
-import { Like } from 'typeorm'
 
 router.get('/', async (req: UserRequest, res: Response) => {
     const page = req.query.page ? +req.query.page : 1

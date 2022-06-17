@@ -44,6 +44,11 @@ class Validation {
         return this
     }
 
+    customRegex(regex: string) {
+        this.validations.push(`regex|${regex}`)
+        return this
+    }
+
     notEmpty() {
         this.validations.push('not-empty')
         return this
@@ -91,6 +96,13 @@ class Validation {
             if (current === 'max-length') {
                 if (this.input.length > this.maxValue) {
                     message = `Please not enter no longer ${this.maxValue} character.`
+                }
+                continue
+            }
+            if (current.includes('regex')) {
+                const regExp = new RegExp(current.split('regex|')[1])
+                if (!regExp.test(this.input)) {
+                    message = 'Please enter format correctly'
                 }
                 continue
             }

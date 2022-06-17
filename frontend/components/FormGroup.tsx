@@ -3,7 +3,7 @@ import { FC, ReactNode, useEffect, useCallback } from 'react'
 interface FormGroupProps {
     errorMessage?: string
     children: ReactNode,
-    isRequired: boolean
+    isRequired: boolean,
 }
 
 const FormGroup: FC<FormGroupProps> = ({ errorMessage, children, isRequired }) => {
@@ -11,6 +11,7 @@ const FormGroup: FC<FormGroupProps> = ({ errorMessage, children, isRequired }) =
     const input = useCallback((node: HTMLDivElement) => {
         if (!node) return
         const input = node.querySelector('input') || node.querySelector('textarea') || node.querySelector('select')
+
         input?.classList.add('form-validation-input')
         if (errorMessage) {
             input?.setAttribute('is-valid', 'no')

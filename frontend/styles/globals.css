@@ -24,6 +24,12 @@ body {
 }
 
 
+.spacer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .form-group {
     width: 100%;
 }

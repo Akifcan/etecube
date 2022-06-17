@@ -9,7 +9,7 @@ const { Option } = Select
 const AddCompany: FC = () => {
 
     const [validation, setValidation] = useState<Validation>()
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(true)
 
     const [name, setName] = useState<FormProps<string>>({ value: '', errorMessage: '' })
     const [legalNumber, setLegalNumber] = useState<FormProps<string>>({ value: '', errorMessage: '' })
@@ -33,7 +33,7 @@ const AddCompany: FC = () => {
             <title>Add Company</title>
         </Head>
         <Container header={{ title: 'Home', subtitle: 'Add Company' }}>
-            <form ref={form}>
+            <form ref={form} className='spacer'>
                 {validation && (
                     <>
                         <FormGroup isRequired={true} errorMessage={name.errorMessage}>
@@ -41,7 +41,7 @@ const AddCompany: FC = () => {
                                 onChange={(e) => {
                                     setName({
                                         value: e.target.value,
-                                        errorMessage: validation.setValue(e.target.value).notEmpty().email().validate()
+                                        errorMessage: validation.setValue(e.target.value).notEmpty().validate()
                                     })
                                 }}
                                 placeholder='Company Name'
@@ -52,20 +52,20 @@ const AddCompany: FC = () => {
                                 onChange={(e) => {
                                     setWebsite({
                                         value: e.target.value,
-                                        errorMessage: validation.setValue(e.target.value).notEmpty().email().validate()
+                                        errorMessage: validation.setValue(e.target.value).notEmpty().customRegex("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?").validate()
                                     })
                                 }}
                                 placeholder='Website'
                                 style={{ width: '100%' }} />
                         </FormGroup>
-                        <FormGroup isRequired={true} errorMessage={country.errorMessage}>
+                        <FormGroup isRequired={false} errorMessage={country.errorMessage}>
                             <Select
                                 value={country.value}
                                 style={{ width: '100%' }}
                                 onChange={(e) => {
                                     setCountry({
                                         value: e,
-                                        errorMessage: validation.setValue(e).notEmpty().email().validate()
+                                        errorMessage: validation.setValue(e).notEmpty().validate()
                                     })
                                 }}
                             >
@@ -80,13 +80,14 @@ const AddCompany: FC = () => {
                                 onChange={(e) => {
                                     setLegalNumber({
                                         value: e.target.value,
-                                        errorMessage: validation.setValue(e.target.value).notEmpty().email().validate()
+                                        errorMessage: validation.setValue(e.target.value).notEmpty().validate()
                                     })
                                 }}
                                 type='number'
                                 placeholder='Legal Number'
                                 style={{ width: '100%' }} />
                         </FormGroup>
+                        <Button disabled={disabled} type='primary'>Create</Button>
                     </>
                 )}
 

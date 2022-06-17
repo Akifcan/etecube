@@ -50,7 +50,7 @@ const Company: FC = () => {
         <Head>
             <title>Companies</title>
         </Head>
-        <Container header={{ title: 'Home', subtitle: 'Companies' }}>
+        <Container header={{ title: 'Companies', subtitle: 'Manage Companies' }}>
             <Link href={'/company/add'} passHref={true}>
                 <Button type='dashed' style={{ marginBlockEnd: '1rem' }}>Add New Company</Button>
             </Link>

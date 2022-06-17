@@ -32,7 +32,7 @@ const AddCompany: FC = () => {
         <Head>
             <title>Add Company</title>
         </Head>
-        <Container header={{ title: 'Home', subtitle: 'Add Company' }}>
+        <Container header={{ title: 'Companies', subtitle: 'Add Company' }}>
             <form ref={form} className='spacer'>
                 {validation && (
                     <>

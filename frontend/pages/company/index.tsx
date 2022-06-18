@@ -91,7 +91,7 @@ const Company: FC = () => {
         <Head>
             <title>Companies</title>
         </Head>
-        <Container header={{ title: 'Companies', subtitle: 'Manage Companies' }}>
+        <Container header={{ title: 'Companies', subtitle: 'Manage Companies' }} loginRequired={true}>
             {!isLoading && (
                 <>
                     <Row>

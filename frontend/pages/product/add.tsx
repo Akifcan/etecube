@@ -70,7 +70,7 @@ const AddProduct: FC = () => {
         <Head>
             <title>Add Company</title>
         </Head>
-        <Container header={{ title: 'Products', subtitle: 'Add Product' }}>
+        <Container header={{ title: 'Products', subtitle: 'Add Product' }} loginRequired={true}>
             <form ref={form} className='spacer'>
                 {validation && (
                     <>

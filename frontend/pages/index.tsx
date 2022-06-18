@@ -1,9 +1,8 @@
-import type { NextPage } from 'next'
+import { FC } from 'react'
 import Head from 'next/head'
-import { DatePicker } from 'antd'
 import Container from '@/components/Container'
 
-const Home: NextPage = () => {
+const Home: FC = () => {
   return (
     <div>
       <Head>
@@ -13,7 +12,6 @@ const Home: NextPage = () => {
       </Head>
       <Container header={{ title: 'Home', subtitle: 'Home Page' }} loginRequired={true}>
         <main>
-          <DatePicker />
         </main>
       </Container>
 

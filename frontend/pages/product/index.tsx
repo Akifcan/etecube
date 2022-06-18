@@ -97,7 +97,7 @@ const Product: FC = () => {
         <Head>
             <title>Products</title>
         </Head>
-        <Container header={{ title: 'Products', subtitle: 'Manage Products' }}>
+        <Container header={{ title: 'Products', subtitle: 'Manage Products' }} loginRequired={true}>
             {!isLoading && (
                 <>
                     <Row>

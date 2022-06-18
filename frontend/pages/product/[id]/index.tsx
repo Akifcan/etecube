@@ -90,7 +90,7 @@ const EditProduct: FC = () => {
         <Head>
             <title>Edit Product</title>
         </Head>
-        <Container header={{ title: 'Products', subtitle: 'Edit Product' }}>
+        <Container header={{ title: 'Products', subtitle: 'Edit Product' }} loginRequired={true}>
             <form ref={form} className='spacer'>
                 {validation && (
                     <>

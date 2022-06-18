@@ -1,27 +1,17 @@
-import { FC } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Container from '@/components/Container'
-import { Table, Button } from 'antd'
+import { Table, Button, Pagination } from 'antd'
 import Head from 'next/head'
 import Link from 'next/link'
+import http from '@/helpers/http'
+import { CompanyProps } from '@/interfaces/company'
 
 const Company: FC = () => {
 
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Mike',
-            legalNumber: 32,
-            country: '10 Downing Street',
-            website: '10 Downing Street'
-        },
-        {
-            key: '1',
-            name: 'Mike',
-            legalNumber: 32,
-            country: '10 Downing Street',
-            website: '10 Downing Street'
-        }
-    ]
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPage, setTotalPage] = useState<number>()
+
+    const [companies, setCompanies] = useState<CompanyProps[]>([])
 
     const columns = [
         {
@@ -46,6 +36,19 @@ const Company: FC = () => {
         },
     ]
 
+    const loadCompanies = async () => {
+        const companies = await http<{ total: number, companies: CompanyProps[] }>(`/company?page=${currentPage}`, 'GET')
+        setCompanies(companies.data.companies.map((company) => {
+            return { ...company, key: company.id }
+        }))
+        setTotalPage(companies.data.total * 10)
+    }
+
+    useEffect(() => {
+        loadCompanies()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage])
+
     return <>
         <Head>
             <title>Companies</title>
@@ -54,7 +57,12 @@ const Company: FC = () => {
             <Link href={'/company/add'} passHref={true}>
                 <Button type='dashed' style={{ marginBlockEnd: '1rem' }}>Add New Company</Button>
             </Link>
-            <Table dataSource={dataSource} columns={columns} pagination={false} />
+            <Table style={{ overflow: 'auto' }} dataSource={companies} columns={columns} pagination={false} />
+            {totalPage && (
+                <Pagination style={{ marginBlockStart: '1rem' }} onChange={(currentPage) => {
+                    setCurrentPage(currentPage)
+                }} current={currentPage} total={totalPage} />
+            )}
         </Container>
     </>
 }

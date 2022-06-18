@@ -13,8 +13,8 @@ company detail[x]
 
 index page[]
 api
-    add company[]
-    add product[]
+    add company[x]
+    add product[x]
     list product[]
     list company[]
     list company detail[]

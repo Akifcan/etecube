@@ -39,7 +39,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(201).json(company);
 }));
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const company = yield db_1.companyRepository.findOneBy({ id: +req.params.id });
+    const company = yield db_1.companyRepository.findOneByOrFail({ id: +req.params.id });
     res.status(200).json(company);
 }));
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

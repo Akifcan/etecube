@@ -30,7 +30,7 @@ router.post('/', async (req: UserRequest, res: Response) => {
 })
 
 router.get('/:id', async (req: UserRequest, res: Response) => {
-    const company = await companyRepository.findOneBy({ id: +req.params.id })
+    const company = await companyRepository.findOneByOrFail({ id: +req.params.id })
     res.status(200).json(company)
 })
 

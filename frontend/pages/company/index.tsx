@@ -38,6 +38,18 @@ const Company: FC = () => {
             dataIndex: 'website',
             key: 'website',
         },
+        {
+            title: 'Actions',
+            dataIndex: 'id',
+            key: 'actions',
+            render: (id: number) => <Row>
+                <Link href={`/company/${id}`} passHref={true}>
+                    <Button type='primary'>Edit</Button>
+                </Link>
+                <Button style={{ marginLeft: '1rem', background: 'red', color: 'white' }} >Remove</Button>
+            </Row>,
+        },
+
     ]
 
     const loadCompanies = async () => {

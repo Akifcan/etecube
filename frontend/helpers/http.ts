@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const http = async<T>(url: string, method: 'POST' | 'GET' | 'PATH' | 'DELETE', body: Record<string, any> = {}) => {
+const http = async<T>(url: string, method: 'POST' | 'GET' | 'PATCH' | 'DELETE', body: Record<string, any> = {}) => {
 
     const fetchItems = {
         method,

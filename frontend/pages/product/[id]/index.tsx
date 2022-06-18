@@ -1,7 +1,7 @@
 import { FC, useCallback, useState, useEffect } from 'react'
 import Container from '@/components/Container'
 import Validation, { FormProps } from '@/helpers/validation'
-import { Button, Input, Select } from 'antd'
+import { Button, Input, Select, notification } from 'antd'
 import Head from 'next/head'
 import FormGroup from '@/components/FormGroup'
 import { CompanyProps } from '@/interfaces/company'
@@ -52,14 +52,16 @@ const EditProduct: FC = () => {
 
     const onSubmit = async () => {
         setLoading(true)
-        const response = await http('/product', 'POST', {
+        const response = await http(`/product/${router.query.id}`, 'PATCH', {
             name: name.value,
             amount: +amount.value,
             category: category.value,
             company: { id: +company.value }
         })
-        if (response.statusCode === 201) {
-            console.log("redirect!");
+        if (response.statusCode === 200) {
+            notification.open({
+                message: 'Updated',
+            })
         }
         setLoading(false)
     }

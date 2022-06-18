@@ -4,12 +4,14 @@ import Validation, { FormProps } from '@/helpers/validation'
 import { Button, Input, Select } from 'antd'
 import Head from 'next/head'
 import FormGroup from '@/components/FormGroup'
+import http from '@/helpers/http'
 const { Option } = Select
 
 const AddCompany: FC = () => {
 
     const [validation, setValidation] = useState<Validation>()
     const [disabled, setDisabled] = useState(true)
+    const [isLoading, setLoading] = useState(false)
 
     const [name, setName] = useState<FormProps<string>>({ value: '', errorMessage: '' })
     const [legalNumber, setLegalNumber] = useState<FormProps<string>>({ value: '', errorMessage: '' })
@@ -27,6 +29,20 @@ const AddCompany: FC = () => {
             setDisabled(true)
         })
     }, [])
+
+    const onSubmit = async () => {
+        setLoading(true)
+        const response = await http('/company', 'POST', {
+            name: name.value,
+            legalNumber: legalNumber.value,
+            country: country.value,
+            website: website.value
+        })
+        if (response.statusCode === 201) {
+            console.log("redirect!");
+        }
+        setLoading(false)
+    }
 
     return <>
         <Head>
@@ -87,7 +103,11 @@ const AddCompany: FC = () => {
                                 placeholder='Legal Number'
                                 style={{ width: '100%' }} />
                         </FormGroup>
-                        <Button disabled={disabled} type='primary'>Create</Button>
+                        <Button
+                            onClick={onSubmit}
+                            loading={isLoading}
+                            disabled={disabled}
+                            type='primary'>Create</Button>
                     </>
                 )}
 

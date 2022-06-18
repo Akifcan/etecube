@@ -23,6 +23,7 @@ router.get('/', async (req: UserRequest, res: Response) => {
         query.where('product.category = :category', { category: req.query.category })
     }
     const products = await query.getMany()
+
     res.status(200).json({ total: Math.ceil(totalRecord / limit), products })
 })
 

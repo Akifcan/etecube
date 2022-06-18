@@ -65,7 +65,7 @@ const Company: FC = () => {
         <Container header={{ title: 'Companies', subtitle: 'Manage Companies' }}>
             <Row>
                 <Col flex={1}>
-                    <Search placeholder="input search text" allowClear onSearch={onSearch} style={{ width: '100%', marginBlockEnd: '1rem' }} />
+                    <Search placeholder="Search Company" allowClear onSearch={onSearch} style={{ width: '100%', marginBlockEnd: '1rem' }} />
                 </Col>
                 <Col>
                     <Select value={order} onChange={(e) => setOrder(e)}>

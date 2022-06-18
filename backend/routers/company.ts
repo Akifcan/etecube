@@ -19,6 +19,11 @@ router.get('/', async (req: UserRequest, res: Response) => {
     res.status(200).json({ total: Math.ceil(totalRecord / limit), companies })
 })
 
+router.get('/all', async (_, res: Response) => {
+    const companies = await companyRepository.find()
+    return res.status(200).json(companies)
+})
+
 router.post('/', async (req: UserRequest, res: Response) => {
     const company = await companyRepository.save(req.body)
     res.status(201).json(company)

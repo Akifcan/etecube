@@ -30,6 +30,10 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const companies = yield query.getMany();
     res.status(200).json({ total: Math.ceil(totalRecord / limit), companies });
 }));
+router.get('/all', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const companies = yield db_1.companyRepository.find();
+    return res.status(200).json(companies);
+}));
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const company = yield db_1.companyRepository.save(req.body);
     res.status(201).json(company);

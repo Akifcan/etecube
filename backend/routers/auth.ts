@@ -6,6 +6,7 @@ import UserRequest from '../interface/UserRequest'
 import { authGuard } from '../middleware'
 const router = express.Router()
 
+
 router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body
     const user = await userRepository.findOneBy({ email, password: md5(password) })

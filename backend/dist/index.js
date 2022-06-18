@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const auth_1 = __importDefault(require("./routers/auth"));
 const company_1 = __importDefault(require("./routers/company"));
 const product_1 = __importDefault(require("./routers/product"));
+const seeder_1 = __importDefault(require("./routers/seeder"));
 const middleware_1 = require("./middleware");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -17,6 +18,7 @@ const port = 3000;
 db_1.default.initialize()
     .then(() => {
     app.use('/auth', auth_1.default);
+    app.use('/seeder', seeder_1.default);
     app.use('/company', middleware_1.authGuard, company_1.default);
     app.use('/product', middleware_1.authGuard, product_1.default);
     app.listen(port, () => {

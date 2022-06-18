@@ -35,7 +35,7 @@ const ProductTable: FC<IndexPageTableProps> = ({ onLoaded }) => {
 
     const loadCompanies = async () => {
         setLoading(false)
-        const response = await http<{ count: number, products: ProductProps[] }>(`/product?page=${1}&name=&last`, 'GET')
+        const response = await http<{ count: number, products: ProductProps[] }>(`/product?page=${1}&name=&last=last`, 'GET')
         setProducts(response.data.products)
         onLoaded(response.data.count)
     }

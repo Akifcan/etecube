@@ -20,15 +20,17 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const order = req.query.order || 'ASC';
     const limit = 5;
     const query = db_1.companyRepository.createQueryBuilder('company')
-        .skip(page - 1)
         .take(limit)
-        .orderBy('company.name', order);
+        .skip((page - 1) * limit);
     const totalRecord = yield db_1.companyRepository.count();
     if (req.query.name) {
         query.where('company.name like LOWER(:name)', { name: `%${req.query.name.toLowerCase()}%` });
     }
     if (req.query.last) {
-        query.orderBy('product.createdAt', 'DESC');
+        query.orderBy('company.createdAt', 'DESC');
+    }
+    if (req.query.order) {
+        query.orderBy('company.name', order);
     }
     const companies = yield query.getMany();
     res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), companies });

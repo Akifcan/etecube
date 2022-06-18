@@ -9,9 +9,8 @@ router.get('/', async (req: UserRequest, res: Response) => {
     const limit = 5
     const query = productRepository.createQueryBuilder('product')
         .leftJoinAndSelect('product.company', 'company')
-        .skip(page - 1)
         .take(limit)
-        .orderBy('product.name', order)
+        .skip((page - 1) * limit)
     const totalRecord = await productRepository.count()
     if (req.query.name) {
         query.where('product.name like LOWER(:name)', { name: `%${(req.query.name as string).toLowerCase()}%` })
@@ -21,6 +20,9 @@ router.get('/', async (req: UserRequest, res: Response) => {
     }
     if (req.query.category) {
         query.where('product.category = :category', { category: req.query.category })
+    }
+    if (req.query.order) {
+        query.orderBy('product.name', order)
     }
     if (req.query.last) {
         query.orderBy('product.createdAt', 'DESC')

@@ -35,7 +35,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         query.where('product.category = :category', { category: req.query.category });
     }
     const products = yield query.getMany();
-    res.status(200).json({ total: Math.ceil(totalRecord / limit), products });
+    res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), products });
 }));
 router.get('/categories', (_, res) => {
     res.status(200).json(['phone', 'laptop', 'car', 'headphone']);

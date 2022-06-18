@@ -24,7 +24,7 @@ router.get('/', async (req: UserRequest, res: Response) => {
     }
     const products = await query.getMany()
 
-    res.status(200).json({ total: Math.ceil(totalRecord / limit), products })
+    res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), products })
 })
 
 router.get('/categories', (_, res: Response) => {

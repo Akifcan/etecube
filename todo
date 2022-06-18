@@ -11,7 +11,7 @@ list companies[x]
 product detail[x]
 company detail[x]
 
-index page[]
+index page[x]
 api
     add company[x]
     add product[x]
@@ -24,3 +24,4 @@ api
     edit company[]
     edit product[]
     index page[]
+    seeder[]

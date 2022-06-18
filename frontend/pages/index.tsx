@@ -1,8 +1,19 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Head from 'next/head'
 import Container from '@/components/Container'
+import CompanyTable from '@/components/company/CompanyTable'
+import ProductTable from '@/components/product/ProductTable'
+import { Col, Row, Statistic } from 'antd'
+
+export interface IndexPageTableProps {
+  onLoaded: (total: number) => void
+}
 
 const Home: FC = () => {
+
+  const [totalCompanyCount, setTotalCompanyCount] = useState(0)
+  const [totalProductCount, setTotalProductCount] = useState(0)
+
   return (
     <div>
       <Head>
@@ -12,6 +23,22 @@ const Home: FC = () => {
       </Head>
       <Container header={{ title: 'Home', subtitle: 'Home Page' }} loginRequired={true}>
         <main>
+          <Row style={{ gap: '1rem', flexWrap: 'wrap' }}>
+            <Col flex={1}>
+              <CompanyTable onLoaded={(total) => setTotalCompanyCount(total)} />
+            </Col>
+            <Col>
+              <ProductTable onLoaded={(total) => setTotalProductCount(total)} />
+            </Col>
+          </Row>
+          <Row style={{ gap: '1rem', flexWrap: 'wrap', marginBlockStart: '1rem' }}>
+            <Col flex={1}>
+              <Statistic style={{ background: 'white', padding: '1rem' }} title="Total Products" value={totalCompanyCount} />
+            </Col>
+            <Col flex={1}>
+              <Statistic style={{ background: 'white', padding: '1rem' }} title="Total Companies" value={totalProductCount} />
+            </Col>
+          </Row>
         </main>
       </Container>
 

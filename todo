@@ -23,5 +23,5 @@ api
     delete product[x]
     edit company[]
     edit product[]
-    index page[]
+    index page[x]
     seeder[]

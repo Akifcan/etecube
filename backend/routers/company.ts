@@ -30,8 +30,12 @@ router.post('/', async (req: UserRequest, res: Response) => {
 })
 
 router.get('/:id', async (req: UserRequest, res: Response) => {
-    const company = await companyRepository.findOneByOrFail({ id: +req.params.id })
-    res.status(200).json(company)
+    try {
+        const company = await companyRepository.findOneByOrFail({ id: +req.params.id })
+        res.status(200).json(company)
+    } catch (e) {
+        res.status(404).json({ message: 'not found' })
+    }
 })
 
 router.delete('/:id', async (req: UserRequest, res: Response) => {

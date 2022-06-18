@@ -37,8 +37,12 @@ router.post('/', async (req: UserRequest, res: Response) => {
 })
 
 router.get('/:id', async (req: UserRequest, res: Response) => {
-    const product = await productRepository.findOneBy({ id: +req.params.id })
-    res.status(200).json(product)
+    try {
+        const product = await productRepository.findOneOrFail({ where: { id: +req.params.id }, relations: ['company'] })
+        res.status(200).json(product)
+    } catch (e) {
+        res.status(404).json({ message: 'not found' })
+    }
 })
 
 router.delete('/:id', async (req: UserRequest, res: Response) => {

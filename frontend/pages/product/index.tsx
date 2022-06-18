@@ -46,7 +46,9 @@ const Product: FC = () => {
             title: 'Actions',
             dataIndex: 'id',
             render: (id: number) => <Row>
-                <Button type='primary'>Edit</Button>
+                <Link href={`/product/${id}`} passHref={true}>
+                    <Button type='primary'>Edit</Button>
+                </Link>
                 <Button style={{ marginLeft: '1rem', background: 'red', color: 'white' }} >Remove</Button>
             </Row>,
             key: 'company',
@@ -96,7 +98,7 @@ const Product: FC = () => {
             <Link href={'/product/add'} passHref={true}>
                 <Button type='dashed' style={{ marginBlockEnd: '1rem' }}>Add New Product</Button>
             </Link>
-            <Table dataSource={products} columns={columns} pagination={false} />
+            <Table style={{ overflow: 'auto', background: 'white' }} dataSource={products} columns={columns} pagination={false} />
             {totalPage && (
                 <Pagination style={{ marginBlockStart: '1rem' }} onChange={(currentPage) => {
                     setCurrentPage(currentPage)

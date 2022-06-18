@@ -45,8 +45,13 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(201).json(product);
 }));
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield db_1.productRepository.findOneBy({ id: +req.params.id });
-    res.status(200).json(product);
+    try {
+        const product = yield db_1.productRepository.findOneOrFail({ where: { id: +req.params.id }, relations: ['company'] });
+        res.status(200).json(product);
+    }
+    catch (e) {
+        res.status(404).json({ message: 'not found' });
+    }
 }));
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const product = yield db_1.productRepository.delete({ id: +req.params.id });

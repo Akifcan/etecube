@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, ManyToOne } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, Index, ManyToOne, CreateDateColumn } from "typeorm"
 import { Company } from "./company"
 
 @Entity()
@@ -23,6 +23,9 @@ export class Product {
         { onDelete: 'CASCADE' }
     )
     company: Company
+
+    @CreateDateColumn()
+    createdAt: Date
 
 }
 

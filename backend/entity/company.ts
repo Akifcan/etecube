@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, OneToMany } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, Index, OneToMany, CreateDateColumn } from "typeorm"
 import { Product } from "./product"
 
 @Entity()
@@ -25,6 +25,9 @@ export class Company {
         product => product.company,
     )
     product: Product
+
+    @CreateDateColumn()
+    createdAt: Date
 
 }
 

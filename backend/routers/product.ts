@@ -22,6 +22,9 @@ router.get('/', async (req: UserRequest, res: Response) => {
     if (req.query.category) {
         query.where('product.category = :category', { category: req.query.category })
     }
+    if (req.query.last) {
+        query.orderBy('product.createdAt', 'DESC')
+    }
     const products = await query.getMany()
 
     res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), products })

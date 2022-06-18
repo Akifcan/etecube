@@ -34,7 +34,7 @@ const CompanyTable: FC<IndexPageTableProps> = ({ onLoaded }) => {
 
     const loadCompanies = async () => {
         setLoading(false)
-        const response = await http<{ count: number, companies: CompanyProps[] }>(`/company?page=${1}&name=&order=DESC`, 'GET')
+        const response = await http<{ count: number, companies: CompanyProps[] }>(`/company?page=${1}&name=&last`, 'GET')
         setCompanies(response.data.companies)
         onLoaded(response.data.count)
     }

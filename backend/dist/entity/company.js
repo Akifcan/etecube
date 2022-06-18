@@ -39,6 +39,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => product_1.Product, product => product.company),
     __metadata("design:type", product_1.Product)
 ], Company.prototype, "product", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Company.prototype, "createdAt", void 0);
 Company = __decorate([
     (0, typeorm_1.Entity)()
 ], Company);

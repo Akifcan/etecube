@@ -15,6 +15,9 @@ router.get('/', async (req: UserRequest, res: Response) => {
     if (req.query.name) {
         query.where('company.name like LOWER(:name)', { name: `%${(req.query.name as string).toLowerCase()}%` })
     }
+    if (req.query.last) {
+        query.orderBy('product.createdAt', 'DESC')
+    }
     const companies = await query.getMany()
     res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), companies })
 })

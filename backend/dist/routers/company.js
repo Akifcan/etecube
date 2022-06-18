@@ -27,6 +27,9 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.query.name) {
         query.where('company.name like LOWER(:name)', { name: `%${req.query.name.toLowerCase()}%` });
     }
+    if (req.query.last) {
+        query.orderBy('product.createdAt', 'DESC');
+    }
     const companies = yield query.getMany();
     res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), companies });
 }));

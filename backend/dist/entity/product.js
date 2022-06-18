@@ -35,6 +35,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => company_1.Company, company => company.id, { onDelete: 'CASCADE' }),
     __metadata("design:type", company_1.Company)
 ], Product.prototype, "company", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Product.prototype, "createdAt", void 0);
 Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);

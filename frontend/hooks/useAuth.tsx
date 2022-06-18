@@ -2,8 +2,6 @@ import { FC, useState, useEffect, useContext, createContext, ReactNode } from 'r
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 import { notification } from 'antd'
-import type { NotificationPlacement } from 'antd/lib/notification'
-
 
 interface User {
     firstName: string,

@@ -7,12 +7,14 @@ import FormGroup from '@/components/FormGroup'
 import { CompanyProps } from '@/interfaces/company'
 import http from '@/helpers/http'
 const { Option } = Select
+import { useRouter } from 'next/router'
 
 const AddProduct: FC = () => {
 
     const [validation, setValidation] = useState<Validation>()
     const [disabled, setDisabled] = useState(true)
     const [isLoading, setLoading] = useState(false)
+    const router = useRouter()
 
     const [categories, setCategories] = useState<string[]>([])
     const [companies, setCompanies] = useState<CompanyProps[]>([])
@@ -48,14 +50,14 @@ const AddProduct: FC = () => {
 
     const onSubmit = async () => {
         setLoading(true)
-        const response = await http('/product', 'POST', {
+        const response = await http<{ id: number }>('/product', 'POST', {
             name: name.value,
             amount: +amount.value,
             category: category.value,
             company: { id: +company.value }
         })
         if (response.statusCode === 201) {
-            console.log("redirect!");
+            router.push(`/product/${response.data.id}`)
         }
         setLoading(false)
     }

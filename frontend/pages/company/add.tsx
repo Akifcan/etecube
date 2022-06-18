@@ -6,8 +6,11 @@ import Head from 'next/head'
 import FormGroup from '@/components/FormGroup'
 import http from '@/helpers/http'
 const { Option } = Select
+import { useRouter } from 'next/router'
 
 const AddCompany: FC = () => {
+
+    const router = useRouter()
 
     const [validation, setValidation] = useState<Validation>()
     const [disabled, setDisabled] = useState(true)
@@ -32,14 +35,14 @@ const AddCompany: FC = () => {
 
     const onSubmit = async () => {
         setLoading(true)
-        const response = await http('/company', 'POST', {
+        const response = await http<{ id: number }>('/company', 'POST', {
             name: name.value,
             legalNumber: legalNumber.value,
             country: country.value,
             website: website.value
         })
         if (response.statusCode === 201) {
-            console.log("redirect!");
+            router.push(`/company/${response.data.id}`)
         }
         setLoading(false)
     }

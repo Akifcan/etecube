@@ -24,4 +24,4 @@ api
     edit company[x]
     edit product[x]
     index page[x]
-    seeder[]
+    seeder[x]

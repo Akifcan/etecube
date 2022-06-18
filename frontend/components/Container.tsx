@@ -2,6 +2,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { FC, ReactNode, useEffect, useState } from 'react'
 import { Spin, PageHeader, Button } from 'antd'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 interface ContainerProps {
     header?: { title: string, subtitle?: string }
@@ -38,8 +39,13 @@ const Container: FC<ContainerProps> = ({ children, header, loginRequired = false
                         title={header.title}
                         subTitle={header.subtitle}
                         extra={user ? [
-                            <Button key="2" style={{ textTransform: 'capitalize' }}>{user.firstName} {user.lastName}</Button>,
-                            <Button onClick={logout!} key="1" type="primary">
+                            <Button key="1" style={{ textTransform: 'capitalize' }}>{user.firstName} {user.lastName}</Button>,
+                            <Link key="2" passHref={true} href={"/"}>
+                                <Button style={{ background: 'orange', color: 'white' }}>
+                                    Home Page
+                                </Button>
+                            </Link>,
+                            <Button onClick={logout!} key="3" type="primary">
                                 Logout
                             </Button>,
                         ] : []}

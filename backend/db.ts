@@ -8,7 +8,7 @@ import { User } from './entity/user'
 
 const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT as unknown as number,
     username: process.env.POSTGRES_NAME,
     password: process.env.POSTGRES_PASSWORD,
@@ -16,6 +16,9 @@ const AppDataSource = new DataSource({
     entities: [User, Company, Product],
     synchronize: true,
     logging: false,
+    ssl: {
+        rejectUnauthorized: false
+    }
 })
 
 const userRepository = AppDataSource.getRepository(User)

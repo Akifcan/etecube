@@ -12,14 +12,17 @@ const product_1 = require("./entity/product");
 const user_1 = require("./entity/user");
 const AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: "localhost",
-    port: process.env.POSTGRES_PORT,
-    username: process.env.POSTGRES_NAME,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
+    host: "ec2-44-196-223-128.compute-1.amazonaws.com",
+    port: 5432,
+    username: "yfsapcaswrdtsi",
+    password: "763ff185b5009d5ccbd776bfc1d3bba0fadffc9bb6c0fb88dc6dcd6641fee4e5",
+    database: "deb0a8t0lbotca",
     entities: [user_1.User, company_1.Company, product_1.Product],
     synchronize: true,
     logging: false,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 const userRepository = AppDataSource.getRepository(user_1.User);
 exports.userRepository = userRepository;

@@ -30,35 +30,35 @@ router.get('/', async (req: UserRequest, res: Response) => {
     const products = await query.getMany()
     const totalRecord = await query.getCount()
 
-    res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), products })
+    return res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), products })
 })
 
 router.get('/categories', (_, res: Response) => {
-    res.status(200).json(['phone', 'laptop', 'car', 'headphone'])
+    return res.status(200).json(['phone', 'laptop', 'car', 'headphone'])
 })
 
 router.post('/', async (req: UserRequest, res: Response) => {
     const product = await productRepository.save(req.body)
-    res.status(201).json(product)
+    return res.status(201).json(product)
 })
 
 router.get('/:id', async (req: UserRequest, res: Response) => {
     try {
         const product = await productRepository.findOneOrFail({ where: { id: +req.params.id }, relations: ['company'] })
-        res.status(200).json(product)
+        return res.status(200).json(product)
     } catch (e) {
-        res.status(404).json({ message: 'not found' })
+        return res.status(404).json({ message: 'not found' })
     }
 })
 
 router.delete('/:id', async (req: UserRequest, res: Response) => {
     const product = await productRepository.delete({ id: +req.params.id })
-    res.status(200).json(product)
+    return res.status(200).json(product)
 })
 
 router.patch('/:id', async (req: UserRequest, res: Response) => {
     const product = await productRepository.update({ id: +req.params.id }, req.body)
-    res.status(200).json(product)
+    return res.status(200).json(product)
 })
 
 export default router

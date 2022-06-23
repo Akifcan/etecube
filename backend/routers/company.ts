@@ -22,7 +22,7 @@ router.get('/', async (req: UserRequest, res: Response) => {
     }
     const companies = await query.getMany()
 
-    res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), companies })
+    return res.status(200).json({ count: totalRecord, total: Math.ceil(totalRecord / limit), companies })
 })
 
 router.get('/all', async (_, res: Response) => {
@@ -32,26 +32,26 @@ router.get('/all', async (_, res: Response) => {
 
 router.post('/', async (req: UserRequest, res: Response) => {
     const company = await companyRepository.save(req.body)
-    res.status(201).json(company)
+    return res.status(201).json(company)
 })
 
 router.get('/:id', async (req: UserRequest, res: Response) => {
     try {
         const company = await companyRepository.findOneByOrFail({ id: +req.params.id })
-        res.status(200).json(company)
+        return res.status(200).json(company)
     } catch (e) {
-        res.status(404).json({ message: 'not found' })
+        return res.status(404).json({ message: 'not found' })
     }
 })
 
 router.delete('/:id', async (req: UserRequest, res: Response) => {
     const company = await companyRepository.delete({ id: +req.params.id })
-    res.status(200).json(company)
+    return res.status(200).json(company)
 })
 
 router.patch('/:id', async (req: UserRequest, res: Response) => {
     const company = await companyRepository.update({ id: +req.params.id }, req.body)
-    res.status(200).json(company)
+    return res.status(200).json(company)
 })
 
 export default router

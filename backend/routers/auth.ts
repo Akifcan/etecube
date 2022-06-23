@@ -13,7 +13,7 @@ router.post('/login', async (req: Request, res: Response) => {
     delete user?.password
     const token = jwt.sign({ user }, process.env.JWT_SECRET!)
     if (!user) {
-        res.status(403).json({ message: 'This user not found' })
+        return res.status(403).json({ message: 'This user not found' })
     }
     return res.status(200).json({ token, user })
 })
@@ -31,16 +31,16 @@ router.post('/register', async (req: Request, res: Response) => {
     const { password: userPassword, ...user } = saveUser
     const token = jwt.sign({ user }, process.env.JWT_SECRET!)
 
-    res.status(201).json({ user, token })
+    return res.status(201).json({ user, token })
 })
 
 router.use(authGuard).get('/verify', async (req: UserRequest, res: Response) => {
     const user = await userRepository.findOneBy({ id: req.user?.id })
     delete user?.password
     if (user) {
-        res.status(200).json(user)
+        return res.status(200).json(user)
     } else {
-        res.status(403).json({ message: 'Please try to login again' })
+        return res.status(403).json({ message: 'Please try to login again' })
     }
 })
 

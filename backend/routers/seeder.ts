@@ -37,7 +37,7 @@ router.get('/', async (_, res: Response) => {
     const product10 = await productRepository.save({ name: 'instagram', amount: 10, category: 'headphone', company: company5 })
 
 
-    res.status(201).json({
+    return res.status(201).json({
         user1, user2, user3,
         company1, company2, company3, company4, company5,
         product1, product2, product3, product4, product5, product6, product7, product8, product9, product10

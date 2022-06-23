@@ -14,7 +14,7 @@ const http = async<T>(url: string, method: 'POST' | 'GET' | 'PATCH' | 'DELETE', 
         (fetchItems as any).body = JSON.stringify(body)
     }
 
-    const response = await fetch(`http://localhost:3000${url}`, fetchItems)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, fetchItems)
     return { statusCode: response.status, data: await response.json() as T }
 }
 

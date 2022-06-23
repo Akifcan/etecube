@@ -70,6 +70,7 @@ const Product: FC = () => {
     ]
 
     const loadProducts = async () => {
+
         const products = await http<{ total: number, products: ProductProps[] }>(`/product?page=${currentPage}&name=${search}&order=${order}`, 'GET')
 
         setProducts(products.data.products.map((product) => {
